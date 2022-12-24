@@ -1,6 +1,9 @@
 ### Hexlet tests and linter status:
 
 [![Actions Status](https://github.com/SuperSnowSnail/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/SuperSnowSnail/frontend-project-46/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8745d1ac5b722895c4ca/maintainability)](https://codeclimate.com/github/SuperSnowSnail/frontend-project-46/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/8745d1ac5b722895c4ca/test_coverage)](https://codeclimate.com/github/SuperSnowSnail/frontend-project-46/test_coverage)
+[![CI Status](https://github.com/SuperSnowSnail/frontend-project-46/actions/workflows/gendiff.yml/badge.svg)](https://github.com/SuperSnowSnail/frontend-project-46/actions/workflows/gendiff.yml)
 
 ## GenDiff
 
