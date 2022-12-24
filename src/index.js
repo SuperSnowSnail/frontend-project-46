@@ -23,7 +23,7 @@ const genDiff = (filepath1, filepath2) => {
     }
     return `  - ${key}: ${json1[key]}\n  + ${key}: ${json2[key]}`;
   });
-  return `{\n${diffsArray.join('\n')}\n}`;
+  return ['{', ...diffsArray, '}'].join('\n');
 };
 
 export default genDiff;
