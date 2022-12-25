@@ -33,3 +33,13 @@ gendiff path/to/file1.json path/to/file2.json
 ##### Demo:
 
 [![asciicast](https://asciinema.org/a/bk9fSw4XzqhT5VbguuQS5zhzp.svg)](https://asciinema.org/a/bk9fSw4XzqhT5VbguuQS5zhzp)
+
+##### Compare YAML files
+
+```bash
+gendiff path/to/file1.yaml path/to/file2.yml # (Supports both .yml and .yaml files)
+```
+
+##### Demo:
+
+[![asciicast](https://asciinema.org/a/VlFHl2kItaRVlkHNAzh5dlZXW.svg)](https://asciinema.org/a/VlFHl2kItaRVlkHNAzh5dlZXW)
