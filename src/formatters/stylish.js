@@ -22,23 +22,30 @@ const stylish = (diff) => {
     const bracketIndent = '    '.repeat(depth - 1);
     const lines = currentNode.map((node) => {
       const [key, type, value] = [getKey(node), getType(node), getValue(node)];
+      let line = '';
       switch (type) {
         case 'added':
-          return `${indent}+ ${key}: ${stringify(value, depth + 1)}`;
+          line = `${indent}+ ${key}: ${stringify(value, depth + 1)}`;
+          break;
         case 'removed':
-          return `${indent}- ${key}: ${stringify(value, depth + 1)}`;
+          line = `${indent}- ${key}: ${stringify(value, depth + 1)}`;
+          break;
         case 'unchanged':
-          return `${indent}  ${key}: ${stringify(value, depth + 1)}`;
+          line = `${indent}  ${key}: ${stringify(value, depth + 1)}`;
+          break;
         case 'updated':
-          return [
+          line = [
             `${indent}- ${key}: ${stringify(value[0], depth + 1)}`,
             `${indent}+ ${key}: ${stringify(value[1], depth + 1)}`,
           ].join('\n');
+          break;
         case 'nested':
-          return `${indent}  ${key}: ${iter(value, depth + 1)}`;
+          line = `${indent}  ${key}: ${iter(value, depth + 1)}`;
+          break;
         default:
           throw new Error(`Unsupported node type (${type})!`);
       }
+      return line;
     });
     return ['{', ...lines, `${bracketIndent}}`].join('\n');
   };
