@@ -19,11 +19,13 @@ test.each(['.json', '.yml', '.yaml'])('Supported File Extentions Test', (extenti
   const badpath2 = getFixturePath('file2.txt');
   const expectedStylish = readFile('expectedStylish.txt');
   const expectedPlain = readFile('expectedPlain.txt');
+  const expectedJson = readFile('expectedJSON.txt');
   const formatErr = new Error('Unsupported format type (style)! [Supported: stylish, plain, json]');
   const extErr = new Error('Unsupported file extention (.txt)! [Supported: .json, .yml, .yaml]');
   expect(genDiff(filepath1, filepath2)).toBe(expectedStylish);
   expect(genDiff(filepath1, filepath2, 'stylish')).toBe(expectedStylish);
   expect(genDiff(filepath1, filepath2, 'plain')).toBe(expectedPlain);
+  expect(genDiff(filepath1, filepath2, 'json')).toBe(expectedJson);
   expect(() => genDiff(filepath1, filepath2, 'style')).toThrow(formatErr);
   expect(() => genDiff(filepath1, badpath2)).toThrow(extErr);
   expect(() => genDiff(badpath1, filepath2)).toThrow(extErr);

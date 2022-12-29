@@ -18,28 +18,137 @@ make install
 npm link # (You may need sudo)
 ```
 
-### Modes:
+### Help
 
-#### Default:
+Run GenDiff with option **-h** or **--help** to see help information:
 
-By default GenDiff generate differences in stylish format.
+```bash
+gendiff -h
+```
 
-##### Compare JSON files
+##### Demo:
+
+[![asciicast](https://asciinema.org/a/mLYukQkUwz0TIT8RsuzgMjiu7.svg)](https://asciinema.org/a/mLYukQkUwz0TIT8RsuzgMjiu7)
+
+### Supported files
+
+GenDiff supports JSON (**.json**) and YAML (both **.yml** and **.yaml**) files.
+
+##### Demo:
+
+[![asciicast](https://asciinema.org/a/ucKNkHiLkdxySvmI21qk6zrHA.svg)](https://asciinema.org/a/ucKNkHiLkdxySvmI21qk6zrHA)
+
+### Formats
+
+You can choose one of three output formats with option **-f** or **--format**, e.g.:
+
+```bash
+gendiff -f plain <filepath1> <filepath2>
+```
+
+#### Stylish (Default)
+
+(By default GenDiff generates differences in stylish format)
 
 ```bash
 gendiff path/to/file1.json path/to/file2.json
 ```
 
-##### Demo:
-
-[![asciicast](https://asciinema.org/a/bk9fSw4XzqhT5VbguuQS5zhzp.svg)](https://asciinema.org/a/bk9fSw4XzqhT5VbguuQS5zhzp)
-
-##### Compare YAML files
-
 ```bash
-gendiff path/to/file1.yaml path/to/file2.yml # (Supports both .yml and .yaml files)
+gendiff -f stylish path/to/file1.yaml path/to/file2.yml
+```
+
+##### Output example:
+
+```
+{
+    common: {
+      + follow: false
+        setting1: Value 1
+      - setting2: 200
+      - setting3: true
+      + setting3: null
+      + setting4: blah blah
+      + setting5: {
+            key5: value5
+        }
+        setting6: {
+            doge: {
+              - wow:
+              + wow: so much
+            }
+            key: value
+          + ops: vops
+        }
+    }
+    group1: {
+      - baz: bas
+      + baz: bars
+        foo: bar
+      - nest: {
+            key: value
+        }
+      + nest: str
+    }
+  - group2: {
+        abc: 12345
+        deep: {
+            id: 45
+        }
+    }
+  + group3: {
+        deep: {
+            id: {
+                number: 45
+            }
+        }
+        fee: 100500
+    }
+}
 ```
 
 ##### Demo:
 
-[![asciicast](https://asciinema.org/a/VlFHl2kItaRVlkHNAzh5dlZXW.svg)](https://asciinema.org/a/VlFHl2kItaRVlkHNAzh5dlZXW)
+[![asciicast](https://asciinema.org/a/g3WLQYmMZUQMNIRvlBFTxMep2.svg)](https://asciinema.org/a/g3WLQYmMZUQMNIRvlBFTxMep2)
+
+#### Plain
+
+```bash
+gendiff -f plain path/to/file1.json path/to/file2.yml
+```
+
+##### Output example:
+
+```
+Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]
+```
+
+##### Demo:
+
+[![asciicast](https://asciinema.org/a/VAdyDflBO4EuWsiTm4MYDJcOX.svg)](https://asciinema.org/a/VAdyDflBO4EuWsiTm4MYDJcOX)
+
+#### JSON
+
+```bash
+gendiff -f json path/to/file1.yml path/to/file2.yml
+```
+
+##### Output example:
+
+```
+[{"key":"common","type":"nested","children":[{"key":"follow","type":"added","value":false},{"key":"setting1","type":"unchanged","value":"Value 1"},{"key":"setting2","type":"removed","value":200},{"key":"setting3","type":"updated","from":true,"to":null},{"key":"setting4","type":"added","value":"blah blah"},{"key":"setting5","type":"added","value":{"key5":"value5"}},{"key":"setting6","type":"nested","children":[{"key":"doge","type":"nested","children":[{"key":"wow","type":"updated","from":"","to":"so much"}]},{"key":"key","type":"unchanged","value":"value"},{"key":"ops","type":"added","value":"vops"}]}]},{"key":"group1","type":"nested","children":[{"key":"baz","type":"updated","from":"bas","to":"bars"},{"key":"foo","type":"unchanged","value":"bar"},{"key":"nest","type":"updated","from":{"key":"value"},"to":"str"}]},{"key":"group2","type":"removed","value":{"abc":12345,"deep":{"id":45}}},{"key":"group3","type":"added","value":{"deep":{"id":{"number":45}},"fee":100500}}]
+```
+
+##### Demo:
+
+[![asciicast](https://asciinema.org/a/Tj9Rpee1e9zUIM11eXDZ3JSzU.svg)](https://asciinema.org/a/Tj9Rpee1e9zUIM11eXDZ3JSzU)
