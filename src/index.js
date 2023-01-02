@@ -17,9 +17,9 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const rawData2 = getRawData(filepath2);
   const extName1 = getExtention(filepath1);
   const extName2 = getExtention(filepath2);
-  const parsedData1 = parse(rawData1, extName1);
-  const parsedData2 = parse(rawData2, extName2);
-  const diff = diffConstructor(parsedData1, parsedData2);
+  const parsedObj1 = parse(rawData1, extName1);
+  const parsedObj2 = parse(rawData2, extName2);
+  const diff = diffConstructor(parsedObj1, parsedObj2);
   return format(diff, formatName);
 };
 
