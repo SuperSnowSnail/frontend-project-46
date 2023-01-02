@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { readFileSync } from 'fs';
-import { expect, test } from '@jest/globals';
+import { beforeAll, expect, test } from '@jest/globals';
 import genDiff from '../src/index.js';
 import stylish from '../src/formatters/stylish.js';
 import plain from '../src/formatters/plain.js';
@@ -12,14 +12,23 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
+let badpath1;
+let badpath2;
+let expectedStylish;
+let expectedPlain;
+let expectedJson;
+
+beforeAll(() => {
+  badpath1 = getFixturePath('file1.txt');
+  badpath2 = getFixturePath('file2.txt');
+  expectedStylish = readFile('expectedStylish.txt');
+  expectedPlain = readFile('expectedPlain.txt');
+  expectedJson = readFile('expectedJSON.txt');
+});
+
 test.each(['.json', '.yml', '.yaml'])('Supported File Extentions Test', (extention) => {
   const filepath1 = getFixturePath(`file1${extention}`);
   const filepath2 = getFixturePath(`file2${extention}`);
-  const badpath1 = getFixturePath('file1.txt');
-  const badpath2 = getFixturePath('file2.txt');
-  const expectedStylish = readFile('expectedStylish.txt');
-  const expectedPlain = readFile('expectedPlain.txt');
-  const expectedJson = readFile('expectedJSON.txt');
   const formatErr = new Error('Unsupported format type (style)! [Supported: stylish, plain, json]');
   const extErr = new Error('Unsupported file extention (.txt)! [Supported: .json, .yml, .yaml]');
   expect(genDiff(filepath1, filepath2)).toBe(expectedStylish);
