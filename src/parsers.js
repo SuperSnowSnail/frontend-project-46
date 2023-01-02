@@ -1,13 +1,6 @@
-import { readFileSync } from 'fs';
-import { cwd } from 'process';
-import path from 'path';
 import yaml from 'js-yaml';
 
-const parse = (filepath) => {
-  const fullPath = path.resolve(cwd(), filepath);
-  const data = readFileSync(fullPath, 'utf-8');
-  const extName = path.extname(fullPath);
-
+const parse = (data, extName) => {
   switch (extName) {
     case '.json':
       return JSON.parse(data);
